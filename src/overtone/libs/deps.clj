@@ -178,11 +178,11 @@
            wait-time  (* 1000 wait-time)]
        (if (<= timeout-ms 0)
          (while (not (deps-satisfied? deps))
-           (Thread/sleep wait-time))
+           (Thread/sleep wait-time 0))
          (loop [sleep-time 0]
            (when (> sleep-time timeout-ms)
              (throw (Exception. (str "The following deps took too long (" timeout
                                      " seconds) to be satisfied: " deps))))
            (when-not (deps-satisfied? deps)
-             (Thread/sleep wait-time)
+             (Thread/sleep wait-time 0)
              (recur (+ sleep-time wait-time))))))))
